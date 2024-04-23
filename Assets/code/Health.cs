@@ -9,7 +9,8 @@ public class Health : MonoBehaviour
     public HealthBar healthBar;
     public UnityEvent onDeath;
     public Animator anim;
-    
+    public GameObject gameOverCanvas;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -26,8 +27,10 @@ public class Health : MonoBehaviour
         {
             onDeath.Invoke();
             anim.SetTrigger("Isdead");
+            // Hiển thị màn hình "Game Over"
+            gameOverCanvas.SetActive(true);
+            Time.timeScale = 0f; // Dừng thời gian
         }
         healthBar.UpdateHealth(currentHealth, maxHealth);
     }
-     
 }
