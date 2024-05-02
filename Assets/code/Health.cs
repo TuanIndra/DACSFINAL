@@ -10,10 +10,20 @@ public class Health : MonoBehaviour
     public UnityEvent onDeath;
     public Animator anim;
     public GameObject gameOverCanvas;
-
+    public float maxFallHeight = -8f;
     private void Start()
     {
         currentHealth = maxHealth;
+        healthBar.UpdateHealth(currentHealth, maxHealth);
+    }
+    public void FixedUpdate()
+    {
+        if (transform.position.y < maxFallHeight)
+        {
+            currentHealth = 0;
+            Die();
+
+        }
         healthBar.UpdateHealth(currentHealth, maxHealth);
     }
     public void takeDamage(int damage)
@@ -23,14 +33,21 @@ public class Health : MonoBehaviour
         {
             anim.SetTrigger("isHurt");
         }
+
         if (currentHealth <= 0)
         {
-            onDeath.Invoke();
-            anim.SetTrigger("Isdead");
-            // Hiển thị màn hình "Game Over"
-            gameOverCanvas.SetActive(true);
-            Time.timeScale = 0f; // Dừng thời gian
+            Die();
         }
+        
         healthBar.UpdateHealth(currentHealth, maxHealth);
     }
+    
+    public void Die()
+    {
+        onDeath.Invoke();
+        anim.SetTrigger("Isdead");
+        gameOverCanvas.SetActive(true);
+        Time.timeScale = 0f; // Dừng thời gian
+    }
+
 }
