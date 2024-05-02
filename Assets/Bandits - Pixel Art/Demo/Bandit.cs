@@ -84,7 +84,7 @@ public class Bandit : MonoBehaviour {
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             m_groundSensor.Disable(0.2f);
         }
-
+       
 
 
         //Change between idle and combat idle
